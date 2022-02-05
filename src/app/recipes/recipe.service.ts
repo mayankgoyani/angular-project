@@ -23,6 +23,12 @@ export class RecipeService {
       [new Ingredient('dough', 1), new Ingredient('pizza sauce', 1), new Ingredient('cheese', 1)])];
 
 
+  setRecipes(recipe: Recipe[]) {
+    this.recipes = recipe;
+    this.recipeChanged.next(this.recipes.slice());
+
+  }
+  
   getRecipes() {
     return this.recipes.slice();
   }
