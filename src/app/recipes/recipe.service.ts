@@ -9,6 +9,7 @@ import { Recipe } from './recipe.model';
 })
 export class RecipeService {
   constructor(private slService: ShoppingListService) { }
+  recipeChanged = new Subject<Recipe[]>();
 
   recipeSelected = new Subject<Recipe>();
   recipes: Recipe[] = [
@@ -32,6 +33,23 @@ export class RecipeService {
 
   addIngridientsToShoppingList(ingridients: Ingredient[]) {
     this.slService.addIngridientsFromRecipe(ingridients);
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipeChanged.next(this.recipes.slice());
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipeChanged.next(this.recipes.slice());
+
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipeChanged.next(this.recipes.slice());
+
   }
 
 }
